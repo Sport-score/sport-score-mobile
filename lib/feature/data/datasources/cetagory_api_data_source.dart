@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 import 'package:sport_shedule_mobile/core/errors/exception.dart';
 import 'package:sport_shedule_mobile/feature/data/models/category_model.dart';
 

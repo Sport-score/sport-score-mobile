@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:meta/meta.dart';
 import 'package:sport_shedule_mobile/core/errors/exception.dart';
 import 'package:sport_shedule_mobile/core/errors/failure.dart';
 import 'package:sport_shedule_mobile/core/platform/network_info.dart';
