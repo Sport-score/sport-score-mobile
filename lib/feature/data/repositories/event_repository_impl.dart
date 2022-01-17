@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:meta/meta.dart';
 import 'package:sport_shedule_mobile/core/errors/exception.dart';
 import 'package:sport_shedule_mobile/core/errors/failure.dart';
 import 'package:sport_shedule_mobile/core/platform/network_info.dart';
@@ -53,7 +52,8 @@ class EventRepositoryImpl implements EventRepository{
   Future<Either<Failure, List<EventEntity>>> getEventsByIds() async {
     if (await networkInfo.isConnected){
       try{
-        final remoteEvents = await apiDataSource.getEventsByIds(localDataSource.getFavoriteEventsIds());
+        List<int> favoriteEventsIds = localDataSource.getFavoriteEventsIds();
+        final remoteEvents = await apiDataSource.getEventsByIds(favoriteEventsIds);
         return Right(remoteEvents);
       } on ServerException{
         return Left(ServerFailure());
@@ -64,5 +64,40 @@ class EventRepositoryImpl implements EventRepository{
     }
   }
 
+  @override
+  Future<Either<Failure, List<int>>> getFavoriteEventsIds() async {
+    try{
+      List<int> favoriteEventsIds = localDataSource.getFavoriteEventsIds();
+      return Right(favoriteEventsIds);
+    } on ServerException{
+      return Left(ServerFailure());
+    }
+  }
 
+  @override
+  Future<Either<Failure, void>> addEventToFavorite(int eventId) async {
+    try{
+      return Right(localDataSource.addFavoriteEventIdToCache(eventId));
+    } on ServerException{
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteEventToFavorite(int eventId) async {
+    try{
+      return Right(localDataSource.deleteFavoriteEventIdToCache(eventId));
+    } on ServerException{
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> checkEventIsFavorite(int eventId) async{
+    try{
+      return Right(localDataSource.checkEventIsFavorite(eventId));
+    } on ServerException{
+      return Left(ServerFailure());
+    }
+  }
 }

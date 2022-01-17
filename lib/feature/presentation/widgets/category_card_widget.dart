@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sport_shedule_mobile/common/app_colors.dart';
 import 'package:sport_shedule_mobile/feature/domain/entities/category_entity.dart';
 import 'package:sport_shedule_mobile/feature/presentation/pages/events_list_page.dart';
+import 'package:sport_shedule_mobile/feature/presentation/widgets/card_text_widget.dart';
 
 class CategoryCardWidget extends StatelessWidget{
   final CategoryEntity category;
@@ -25,8 +26,11 @@ class CategoryCardWidget extends StatelessWidget{
           borderRadius: BorderRadius.circular(8),
         ),
         child: ListTile(
-          title: Text(category.name),
-          trailing: Icon(Icons.keyboard_arrow_right),
+          title: CardTextWidget(text: category.name),
+          trailing: Icon(
+            Icons.keyboard_arrow_right,
+            color: AppColors.orange,
+          ),
         ),
       ),
     );

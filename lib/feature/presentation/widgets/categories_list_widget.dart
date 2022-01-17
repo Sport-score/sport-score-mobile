@@ -12,8 +12,10 @@ class CategoriesListWidget extends StatelessWidget{
   Widget build(BuildContext context) {
     return BlocBuilder<CategoriesListCubit, CategoriesListState>(builder: (context, state) {
           List<CategoryEntity> categories = [];
-          
-          if (state is CategoriesListLoaded){
+          if (state is CategoriesListLoading){
+            return _loadingIndicator();
+          }
+          else if (state is CategoriesListLoaded){
             categories = state.categoriesList;
           }
           else if (state is CategoriesListError){
@@ -36,8 +38,20 @@ class CategoriesListWidget extends StatelessWidget{
                   color: AppColors.orange,
                 );
               },
-              itemCount: categories.length);
+              itemCount: categories.length,
+          );
         }
+    );
+  }
+
+  Widget _loadingIndicator(){
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Center(
+        child: CircularProgressIndicator(
+          color: AppColors.orange,
+        ),
+      ),
     );
   }
 }

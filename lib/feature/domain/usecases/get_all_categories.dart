@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import 'package:sport_shedule_mobile/core/errors/failure.dart';
 import 'package:sport_shedule_mobile/core/usecases/usecase.dart';
 import 'package:sport_shedule_mobile/feature/domain/entities/category_entity.dart';

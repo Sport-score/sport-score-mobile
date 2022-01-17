@@ -13,6 +13,11 @@ class EventsListEmpty extends EventsListState{
   List<Object> get props => [];
 }
 
+class EventsListLoading extends EventsListState{
+  @override
+  List<Object> get props => [];
+}
+
 class EventsListLoaded extends EventsListState{
   final List<EventEntity> eventsList;
 

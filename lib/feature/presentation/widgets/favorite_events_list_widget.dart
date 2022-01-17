@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sport_shedule_mobile/common/app_colors.dart';
-import 'package:sport_shedule_mobile/feature/domain/entities/category_entity.dart';
 import 'package:sport_shedule_mobile/feature/domain/entities/event_entity.dart';
 import 'package:sport_shedule_mobile/feature/presentation/bloc/events_list_cubit/events_list_cubit.dart';
 import 'package:sport_shedule_mobile/feature/presentation/bloc/events_list_cubit/events_list_state.dart';
-import 'package:sport_shedule_mobile/feature/presentation/widgets/event_card_widget.dart';
+import 'package:sport_shedule_mobile/feature/presentation/widgets/error_text_widget.dart';
 
-class EventsListWidget extends StatelessWidget{
-  final CategoryEntity category;
+import 'event_card_widget.dart';
 
-  const EventsListWidget({required this.category});
-
+class FavoriteEventsListWidget extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<EventsListCubit, EventsListState>(builder: (context, state) {
@@ -24,26 +21,27 @@ class EventsListWidget extends StatelessWidget{
       }
       else if (state is EventsListError){
         return Center(
-          child: Text(
-            state.message,
-            style: TextStyle(
-              color: AppColors.errorColor,
-              fontSize: 25,
-            ),
-          ),
+          child: ErrorTextWidget(text: state.message,),
         );
       }
-      return ListView.separated(
-        itemBuilder: (context, index){
-          return EventCardWidget(event: events[index]);
-        },
-        separatorBuilder: (context, index) {
-          return Divider(
-            color: AppColors.orange,
-          );
-        },
-        itemCount: events.length,
-      );
+      if(events.isEmpty){
+        return Center(
+          child: ErrorTextWidget(text: 'No favorite events',),
+        );
+      }
+      else{
+        return ListView.separated(
+          itemBuilder: (context, index){
+            return EventCardWidget(event: events[index]);
+          },
+          separatorBuilder: (context, index) {
+            return Divider(
+              color: AppColors.orange,
+            );
+          },
+          itemCount: events.length,
+        );
+      }
     }
     );
   }

@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import 'package:sport_shedule_mobile/core/errors/failure.dart';
 import 'package:sport_shedule_mobile/core/usecases/usecase.dart';
 import 'package:sport_shedule_mobile/feature/domain/entities/event_entity.dart';
@@ -17,10 +16,6 @@ class GetEventsByIds extends UseCase<List<EventEntity>, GetEventsByIdsParams>{
 }
 
 class GetEventsByIdsParams extends Equatable{
-  List<int> eventsIds;
-
-  GetEventsByIdsParams({required this.eventsIds});
-
   @override
-  List<Object> get props => [eventsIds];
+  List<Object> get props => [];
 }

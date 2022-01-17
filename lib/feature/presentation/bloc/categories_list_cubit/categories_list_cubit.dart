@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:sport_shedule_mobile/core/errors/failure.dart';
 import 'package:sport_shedule_mobile/feature/domain/entities/category_entity.dart';
 import 'package:sport_shedule_mobile/feature/domain/usecases/get_all_categories.dart';
@@ -14,6 +13,8 @@ class CategoriesListCubit extends Cubit<CategoriesListState>{
   CategoriesListCubit({required this.getAllCategories}) : super(CategoriesListEmpty());
 
   void loadCategoriesList() async {
+    if (state is CategoriesListLoading) return;
+
     final currentState = state;
 
     var categories = <CategoryEntity>[];
@@ -21,6 +22,8 @@ class CategoriesListCubit extends Cubit<CategoriesListState>{
     if(currentState is CategoriesListLoaded){
       categories = currentState.categoriesList;
     }
+
+    emit(CategoriesListLoading());
 
     final failureOrCategories = await getAllCategories(GetAllCategoriesParams());
     

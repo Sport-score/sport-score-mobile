@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 import 'package:sport_shedule_mobile/core/errors/exception.dart';
 import 'package:sport_shedule_mobile/feature/data/models/event_model.dart';
 
@@ -62,7 +61,7 @@ class EventAPIDataSourceImpl implements EventAPIDataSource{
     final response = await client.post(
         Uri.parse('http://sport-shedule-backend.herokuapp.com/admin/event/byIds'),
         headers: {'Content-Type': 'application/json'},
-        body: eventsIds,
+        body: jsonEncode(eventsIds),
     );
     if (response.statusCode == 200){
       final events = json.decode(response.body);

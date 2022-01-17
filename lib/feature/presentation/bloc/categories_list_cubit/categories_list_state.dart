@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import 'package:sport_shedule_mobile/feature/domain/entities/category_entity.dart';
 
 abstract class CategoriesListState extends Equatable{
@@ -10,6 +9,11 @@ abstract class CategoriesListState extends Equatable{
 }
 
 class CategoriesListEmpty extends CategoriesListState{
+  @override
+  List<Object> get props => [];
+}
+
+class CategoriesListLoading extends CategoriesListState{
   @override
   List<Object> get props => [];
 }
