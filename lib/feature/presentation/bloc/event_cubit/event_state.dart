@@ -18,13 +18,24 @@ class EventLoading extends EventState{
   List<Object> get props => [];
 }
 
-class EventLoaded extends EventState{
+class EventLoadedIsFavorite extends EventState{
   final EventEntity event;
-  final bool isFavorite;
+  final bool isFavorite = true;
 
-  const EventLoaded({
+  const EventLoadedIsFavorite({
     required this.event,
-    required this.isFavorite,
+  });
+
+  @override
+  List<Object> get props => [event, isFavorite];
+}
+
+class EventLoadedIsNotFavorite extends EventState{
+  final EventEntity event;
+  final bool isFavorite = false;
+
+  const EventLoadedIsNotFavorite({
+    required this.event,
   });
 
   @override

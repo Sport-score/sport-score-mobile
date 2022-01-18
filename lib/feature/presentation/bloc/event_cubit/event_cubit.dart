@@ -28,13 +28,6 @@ class EventCubit extends Cubit<EventState>{
   void loadEvent({eventId}) async {
     if (state is EventLoading) return;
 
-    final currentState = state;
-
-    if(currentState is EventLoaded){
-      event = currentState.event;
-      isFavorite = currentState.isFavorite;
-    }
-
     emit(EventLoading());
 
     final failureOrEvent = await getEventById(GetEventByIdParams(eventId: eventId));
@@ -46,16 +39,24 @@ class EventCubit extends Cubit<EventState>{
 
     failureOrIsFavorite.fold((error) => emit(EventError(message: _mapFailureToMessage(error))), (_isFavorite) {
       isFavorite = _isFavorite;
-      emit(EventLoaded(event: event, isFavorite: isFavorite));
+      if(isFavorite){
+        emit(EventLoadedIsFavorite(event: event));
+      }
+      else{
+        emit(EventLoadedIsNotFavorite(event: event));
+      }
+
     });
   }
 
   void addToFavorite({eventId}) async {
     addEventToFavorite(AddEventToFavoriteParams(eventId: eventId));
+    loadEvent(eventId: eventId);
   }
 
   void deleteFromFavorite({eventId}) async {
     deleteEventFromFavorite(DeleteEventFromFavoriteParams(eventId: eventId));
+    loadEvent(eventId: eventId);
   }
 
   String _mapFailureToMessage(Failure failure){
