@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sport_shedule_mobile/common/app_colors.dart';
-import 'package:sport_shedule_mobile/feature/presentation/pages/home_page.dart';
+import 'package:sport_shedule_mobile/feature/presentation/pages/categories_list_page.dart';
 
 import 'locator_service.dart' as di;
 
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget{
         backgroundColor: AppColors.mainBackground,
         scaffoldBackgroundColor: AppColors.mainBackground,
       ),
-      home: HomePage(),
+      home: CategoriesListPage(),
     );
   }
 }
