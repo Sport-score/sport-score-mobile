@@ -11,7 +11,7 @@ import '/locator_service.dart' as di;
 class EventPage extends StatelessWidget{
   final EventEntity event;
 
-  const EventPage({required this.event});
+  EventPage({required this.event});
 
   @override
   Widget build(BuildContext context) {

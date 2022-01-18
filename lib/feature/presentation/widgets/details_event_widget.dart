@@ -7,8 +7,8 @@ import 'package:sport_shedule_mobile/feature/presentation/bloc/event_cubit/event
 import 'package:sport_shedule_mobile/feature/presentation/bloc/event_cubit/event_state.dart';
 import 'package:sport_shedule_mobile/feature/presentation/widgets/app_bar_text_widget.dart';
 import 'package:sport_shedule_mobile/feature/presentation/widgets/error_text_widget.dart';
-
-import '/locator_service.dart' as di;
+import 'package:sport_shedule_mobile/feature/presentation/widgets/event_image_widget.dart';
+import 'package:sport_shedule_mobile/feature/presentation/widgets/favorite_button_widget.dart';
 
 class DetailsEventWidget extends StatelessWidget{
   final EventEntity event;
@@ -18,12 +18,18 @@ class DetailsEventWidget extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<EventCubit, EventState>(builder: (context, state) {
+
       EventEntity event = this.event;
       bool isFavorite = false;
+
       if (state is EventLoading){
         return _loadingIndicator();
       }
-      else if (state is EventLoaded){
+      else if (state is EventLoadedIsFavorite){
+        event = state.event;
+        isFavorite = state.isFavorite;
+      }
+      else if (state is EventLoadedIsNotFavorite){
         event = state.event;
         isFavorite = state.isFavorite;
       }
@@ -32,64 +38,38 @@ class DetailsEventWidget extends StatelessWidget{
           child: ErrorTextWidget(text: state.message),
         );
       }
-      if(isFavorite){
-        return Center(
-          child: Column(
-            children: [
-              AppBarTextWidget(text: event.firstPlayer.name),
-              AppBarTextWidget(text: event.score.scorePlayer1.toString()),
-              SizedBox(
-                height: 28,
-              ),
-              AppBarTextWidget(text: event.score.scorePlayer2.toString()),
-              AppBarTextWidget(text: event.secondPlayer.name),
-              SizedBox(
-                height: 28,
-              ),
-              AppBarTextWidget(text: DateFormat('dd-MM-yyyy').format(event.date).toString()),
-              FloatingActionButton(
-                onPressed: (){
-                  isFavorite = false;
-                  di.sl<EventCubit>().deleteFromFavorite(eventId: event.id);
-                },
-                child: Icon(
-                  Icons.favorite_outlined,
-                  color: AppColors.orange,
-                ),
-              ),
-            ],
-          ),
-        );
-      }
-      else{
-        return Center(
-          child: Column(
-            children: [
-              AppBarTextWidget(text: event.firstPlayer.name),
-              AppBarTextWidget(text: event.score.scorePlayer1.toString()),
-              SizedBox(
-                height: 28,
-              ),
-              AppBarTextWidget(text: event.score.scorePlayer2.toString()),
-              AppBarTextWidget(text: event.secondPlayer.name),
-              SizedBox(
-                height: 28,
-              ),
-              AppBarTextWidget(text: DateFormat('dd-MM-yyyy').format(event.date).toString()),
-              FloatingActionButton(
-                onPressed: (){
-                  isFavorite = true;
-                  di.sl<EventCubit>().addToFavorite(eventId: event.id);
-                },
-                child: Icon(
-                  Icons.favorite_border_outlined,
-                  color: AppColors.orange,
-                ),
-              ),
-            ],
-          ),
-        );
-      }
+      return Container(
+        decoration: BoxDecoration(
+          color: AppColors.cellBackground,
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+        ),
+        padding: EdgeInsets.all(28),
+        margin: EdgeInsets.all(28),
+        alignment: Alignment.center,
+        child: Column(
+          children: [
+            AppBarTextWidget(text: DateFormat('dd-MM-yyyy hh:mm aaa').format(event.date).toString()),
+            SizedBox(
+              height: 28,
+            ),
+            EventImageWiget(images: event.images),
+            SizedBox(
+              height: 28,
+            ),
+            AppBarTextWidget(text: event.firstPlayer.name),
+            AppBarTextWidget(text: event.score.scorePlayer1.toString()),
+            SizedBox(
+              height: 28,
+            ),
+            AppBarTextWidget(text: event.score.scorePlayer2.toString()),
+            AppBarTextWidget(text: event.secondPlayer.name),
+            SizedBox(
+              height: 28,
+            ),
+            FavoriteButtonWiget(eventId: event.id, isFavorite: isFavorite,)
+          ],
+        ),
+      );
     }
     );
   }
