@@ -5,7 +5,7 @@ import 'package:sport_shedule_mobile/core/errors/exception.dart';
 import 'package:sport_shedule_mobile/feature/data/models/category_model.dart';
 
 abstract class CategoryAPIDataSource{
-  /// Calls http://sport-shedule-backend.herokuapp.com/admin/category/all endpoint.
+  /// Calls http://sport-shedule-backend.herokuapp.com/category/all endpoint.
   ///
   /// Throws a [ServerException] for all errors codes.
   Future<List<CategoryModel>> getAllCategories();
@@ -19,7 +19,7 @@ class CategoryAPIDataSourceImpl implements CategoryAPIDataSource{
   @override
   Future<List<CategoryModel>> getAllCategories() async{
     final response = await client.get(
-      Uri.parse('http://sport-shedule-backend.herokuapp.com/admin/category/all'),
+      Uri.parse('http://sport-shedule-backend.herokuapp.com/category/all'),
       headers: {'Content-Type': 'application/json'}
     );
     if (response.statusCode == 200){

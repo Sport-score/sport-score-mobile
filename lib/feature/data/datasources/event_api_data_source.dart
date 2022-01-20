@@ -5,17 +5,17 @@ import 'package:sport_shedule_mobile/core/errors/exception.dart';
 import 'package:sport_shedule_mobile/feature/data/models/event_model.dart';
 
 abstract class EventAPIDataSource{
-  /// Calls http://sport-shedule-backend.herokuapp.com/admin/event/byCategoryId/{id} endpoint.
+  /// Calls http://sport-shedule-backend.herokuapp.com/event/byCategoryId/{id} endpoint.
   ///
   /// Throws a [ServerException] for all errors codes.
   Future<List<EventModel>> getEventsByCategoryId(int categoryId);
 
-  /// Calls http://sport-shedule-backend.herokuapp.com/admin/event/byIds endpoint.
+  /// Calls http://sport-shedule-backend.herokuapp.com/event/byIds endpoint.
   ///
   /// Throws a [ServerException] for all errors codes.
   Future<List<EventModel>> getEventsByIds(List<int> eventsIds);
 
-  /// Calls http://sport-shedule-backend.herokuapp.com/admin/event/{id} endpoint.
+  /// Calls http://sport-shedule-backend.herokuapp.com/event/{id} endpoint.
   ///
   /// Throws a [ServerException] for all errors codes.
   Future<EventModel> getEventById(int eventId);
@@ -29,7 +29,7 @@ class EventAPIDataSourceImpl implements EventAPIDataSource{
   @override
   Future<EventModel> getEventById(int eventId) async {
     final response = await client.get(
-      Uri.parse('http://sport-shedule-backend.herokuapp.com/admin/event/$eventId'),
+      Uri.parse('http://sport-shedule-backend.herokuapp.com/event/$eventId'),
       headers: {'Content-Type': 'application/json'},
     );
     if (response.statusCode == 200){
@@ -44,7 +44,7 @@ class EventAPIDataSourceImpl implements EventAPIDataSource{
   @override
   Future<List<EventModel>> getEventsByCategoryId(int categoryId) async {
     final response = await client.get(
-        Uri.parse('http://sport-shedule-backend.herokuapp.com/admin/event/byCategoryId/$categoryId'),
+        Uri.parse('http://sport-shedule-backend.herokuapp.com/event/byCategoryId/$categoryId'),
         headers: {'Content-Type': 'application/json'},
     );
     if (response.statusCode == 200){
@@ -59,7 +59,7 @@ class EventAPIDataSourceImpl implements EventAPIDataSource{
   @override
   Future<List<EventModel>> getEventsByIds(List<int> eventsIds) async {
     final response = await client.post(
-        Uri.parse('http://sport-shedule-backend.herokuapp.com/admin/event/byIds'),
+        Uri.parse('http://sport-shedule-backend.herokuapp.com/event/byIds'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(eventsIds),
     );
